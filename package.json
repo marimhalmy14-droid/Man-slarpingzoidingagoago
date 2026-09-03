@@ -1,0 +1,12 @@
+{
+  "name": "ugc-leaks-monitor",
+  "version": "1.0.0",
+  "description": "UGC Leaks Monitor Engine",
+  "main": "monitor.js",
+  "scripts": {
+    "start": "node monitor.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}
