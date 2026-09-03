@@ -1,0 +1,49 @@
+name: UGC Leaks Monitor Engine
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Runs automatically every 5 minutes globally
+  workflow_dispatch: # Keeps manual execution diagnostics buttons unlocked in your browser
+
+permissions:
+  contents: write
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      # Installs the browser binaries needed for Playwright to handle Cloudflare checks
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Web Scraper Engine
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: node monitor.js
+
+      - name: Keepalive Heartbeat & Database Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          echo "$(date)" > .keepalive
+          
+          git add tracked_items.json .keepalive
+          git commit -m "Pipeline State Update: Clear Storage Keepalive Reset" || exit 0
+          
+          git pull --rebase origin main
+          git push origin HEAD:main
+          
