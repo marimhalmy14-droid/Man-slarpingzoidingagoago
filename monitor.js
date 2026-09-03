@@ -5,7 +5,7 @@ import fs from 'fs';
 // --- CONFIGURATION TARGETS ---
 const WEBHOOK_URL = process.env.WEBHOOK_URL; 
 const ROLE_ID = "1531464694869786675"; // Discord Role ID - set WEBHOOK_URL in GitHub secrets
-const TARGET_SITE = "https://workers.dev";
+const TARGET_SITE = "https://ugcleaks.short-term.workers.dev";
 const DB_FILE = './tracked_items.json';
 
 let trackedItems = [];
@@ -87,7 +87,7 @@ async function sendDiscordAlert(itemName) {
 
     const payload = {
         content: `🚨 <@&${ROLE_ID}> **NEW UGC LEAK PIPELINE DETECTED!**`,
-        embeds: [{
+        embeds: [{ ... }], allowed_mentions: { roles: [ROLE_ID] } }
             title: `🛍️ Item Tracked: ${itemName}`,
             url: TARGET_SITE,
             color: 16711900,
