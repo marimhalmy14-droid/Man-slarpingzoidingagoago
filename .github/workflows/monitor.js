@@ -85,25 +85,8 @@ async function sendDiscordAlert(itemName) {
         return;
     }
 
-    const payload = {
-        content: `🚨 <@&${ROLE_ID}> **NEW UGC LEAK PIPELINE DETECTED!**`,
-        embeds: [{
-            title: `🛍️ Item Tracked: ${itemName}`,
-            url: TARGET_SITE,
-            color: 16711900,
-            timestamp: new Date().toISOString()
-        }]
-    };
-    try {
-        await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-    } catch (err) { 
-        console.error("Webhook frame processing pipeline failure:", err); 
-    }
-}
+    const payload = { content: 🚨 <@&${ROLE_ID}> **NEW UGC LEAK PIPELINE DETECTED!**, embeds: [ { title: 🛍️ Item Tracked: ${itemName}, url: TARGET_SITE, color: 16711900, timestamp: new Date().toISOString() } ], allowed_mentions: { roles: [ROLE_ID] } };
 
+try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); } catch (err) { console.error("Webhook frame processing pipeline failure:", err); } }
 runTracker();
               
