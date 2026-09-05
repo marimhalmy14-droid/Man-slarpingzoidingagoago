@@ -4,8 +4,8 @@ import fs from 'fs';
 
 // --- CONFIGURATION TARGETS ---
 const WEBHOOK_URL = process.env.WEBHOOK_URL; 
-const ROLE_ID = "<@&1531464694869786675>"; // 🔴 REPLACE THIS WITH YOUR REAL DISCORD ROLE ID IN QUOTES
-const TARGET_SITE = "https://workers.dev";
+const ROLE_ID = "1531464694869786675";; // 🔴 REPLACE THIS WITH YOUR REAL DISCORD ROLE ID IN QUOTES
+: const TARGET_SITE = "https://ugcleaks.short-term.workers.dev";
 const DB_FILE = './tracked_items.json';
 
 let trackedItems = [];
@@ -79,13 +79,9 @@ async function runTracker() {
     }
 }
 
-async function sendDiscordAlert(itemName) {
-    if (!WEBHOOK_URL) {
-        console.error("Missing credentials: process.env.WEBHOOK_URL secret vault value is undefined.");
-        return;
-    }
+async function sendDiscordAlert(itemName) { if (!WEBHOOK_URL) { console.error("Missing credentials: process.env.WEBHOOK_URL secret vault value is undefined."); return; }
 
-    const payload = { content: 🚨 <@&${ROLE_ID}> **NEW UGC LEAK PIPELINE DETECTED!**, embeds: [ { title: 🛍️ Item Tracked: ${itemName}, url: TARGET_SITE, color: 16711900, timestamp: new Date().toISOString() } ], allowed_mentions: { roles: [ROLE_ID] } };
+const payload = { content: 🚨 <@&${ROLE_ID}> **NEW UGC LEAK PIPELINE DETECTED!**, embeds: [ { title: 🛍️ Item Tracked: ${itemName}, url: TARGET_SITE, color: 16711900, timestamp: new Date().toISOString() } ], allowed_mentions: { roles: [ROLE_ID] } };
 
 try { await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); } catch (err) { console.error("Webhook frame processing pipeline failure:", err); } }
 runTracker();
